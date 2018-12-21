@@ -3,18 +3,14 @@ const path = require("path");
 const errors = require("./middlewares/errors");
 const config = require("config");
 
-
 var app = express();
 require("./startup/logging")();
 require("./startup/db");
-// require("./startup/routs")(app);
+require("./startup/routs")(app);
 
 const port = config.get("port");
 
 process.env.NODE_CONFIG_DIR = path.join(__dirname, "./config");
-
-// var codes = [];
-
 
 app.use(errors);
 

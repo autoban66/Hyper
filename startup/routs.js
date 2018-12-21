@@ -4,13 +4,9 @@ const express = require("express");
 const path = require("path");
 const passport = require("passport");
 require("express-async-errors");
+const randToken = require("rand-token");
 
-const users = require("../routes/users");
-const accounts = require("../routes/accounts");
-const admins = require("../routes/admins");
-const exchangers = require("../routes/exchangers");
-const tickets = require("../routes/tickets");
-const rpc = require("../routes/rpc");
+const codes = require("../routes/codes");
 
 module.exports = async function(app) {
   // CORS Middleware
@@ -29,10 +25,5 @@ module.exports = async function(app) {
 
   require("../middlewares/passport")(passport);
 
-  app.use("/users", users);
-  app.use("/accounts", accounts);
-  app.use("/admins", admins);
-  app.use("/exchangers", exchangers);
-  app.use("/tickets", tickets);
-  app.use("/rpc", rpc);
+  app.use("/codes", codes);
 };
