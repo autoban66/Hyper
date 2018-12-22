@@ -23,7 +23,3 @@ module.exports.checkNatiionalCode = function(nationalCode) {
   }
   return false;
 };
-
-module.exports.checkMobileNumber = function(mobileNumber) {
-  return /^([0-9]{10,11})$/.test(mobileNumber);
-};

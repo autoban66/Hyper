@@ -7,6 +7,7 @@ require("express-async-errors");
 const randToken = require("rand-token");
 
 const codes = require("../routes/codes");
+const accounts = require("../routes/accounts");
 
 module.exports = async function(app) {
   // CORS Middleware
@@ -26,4 +27,5 @@ module.exports = async function(app) {
   require("../middlewares/passport")(passport);
 
   app.use("/codes", codes);
+  app.use("/accounts", accounts);
 };

@@ -1,11 +1,25 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const Joi = require("joi");
 
 // Account Schema
 const AccountSchema = mongoose.Schema({
   email: { type: String, required: true, unique: true, lowercase: true },
   password: { type: String, required: true },
+  enabled: { type: Boolean, required: true, default: false },
   registeredDate: { type: Date, default: Date.now() }
+});
+
+const userSchema = Joi.object().keys({
+  email: Joi.string()
+    .required()
+    .email({ minDomainAtoms: 2 })
+    .error(new Error("Invalid email")),
+  password: Joi.string()
+    .min(6)
+    .max(30)
+    .required()
+    .error(new Error("Invalid password"))
 });
 
 const Account = (module.exports = mongoose.model("Account", AccountSchema));
@@ -45,11 +59,19 @@ module.exports.getAccountByEmail = async function(email) {
 };
 
 module.exports.addAccount = async function(newAccount) {
+  const joiResult = Joi.validate(newAccount, userSchema);
+  if (joiResult.error) {
+    throw joiResult.error;
+  }
+  account = new Account({
+    email: newAccount.email,
+    password: newAccount.password
+  });
   salt = await bcrypt.genSalt(10);
-  hash = await bcrypt.hash(newAccount.password, salt);
-  newAccount.password = hash;
+  hash = await bcrypt.hash(account.password, salt);
+  account.password = hash;
   try {
-    return await newAccount.save();
+    return await account.save();
   } catch (ex) {
     if (ex.code == 11000) {
       throw new Error("Email registered before");

@@ -17,11 +17,11 @@ const LotterySchema = mongoose.Schema({
 var Lottery = [];
 for (let index = 48; index < 58; index++) {
   char = String.fromCharCode(index);
-  Lottery[char] = module.exports = mongoose.model("Lottery_" + char, LotterySchema);
+  Lottery[char] = mongoose.model("Lottery_" + char, LotterySchema);
 }
 for (let index = 97; index < 123; index++) {
   char = String.fromCharCode(index);
-  Lottery[char] = module.exports = mongoose.model("Lottery_" + char, LotterySchema);
+  Lottery[char] = mongoose.model("Lottery_" + char, LotterySchema);
 }
 
 module.exports.updateLotteryByCode = async function(code, userInfo) {
@@ -29,11 +29,11 @@ module.exports.updateLotteryByCode = async function(code, userInfo) {
   lottery = await Lottery[code.charAt(0)].findOne(query);
 
   if (!lottery) {
-    return { success: false, message: "Invalid code" };
+    return { success: false, message: __("Invalid lottery code") };
   }
 
   if (lottery.registerDate) {
-    return { success: false, message: "Code registered before" };
+    return { success: false, message: __("Code registered before") };
   }
   lottery.firstName = userInfo.firstName;
   lottery.lastName = userInfo.lastName;
@@ -44,7 +44,7 @@ module.exports.updateLotteryByCode = async function(code, userInfo) {
   lottery.address = userInfo.address;
   lottery.registerDate = new Date();
   await lottery.save();
-  return { success: true, message: "Code registered" };
+  return { success: true, message: __("Code registered successfuly") };
 };
 
 module.exports.addLottery = async function(code) {
@@ -53,4 +53,27 @@ module.exports.addLottery = async function(code) {
   });
 
   return await newLottery.save();
+};
+
+module.exports.getCount = async function(from, to) {
+  var query = {};
+  query["registerDate"] = { $gte: "1900-01-01" };
+  if (from) {
+    query["registerDate"]["$gte"] = from;
+  }
+  if (to) {
+    query["registerDate"]["$lte"] = to;
+  }
+  var sum = 0;
+  for (let index = 48; index < 58; index++) {
+    char = String.fromCharCode(index);
+    var count = await Lottery[char].find(query).countDocuments();
+    sum = sum + count;
+  }
+  for (let index = 97; index < 123; index++) {
+    char = String.fromCharCode(index);
+    var count = await Lottery[char].find(query).countDocuments();
+    sum = sum + count;
+  }
+  return sum;
 };

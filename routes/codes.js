@@ -4,9 +4,11 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const randToken = require("rand-token");
+const Joi = require("joi");
 
 const Lottery = require("../models/lottery");
 const Util = require("../middlewares/Util");
+const UserInfoSchema = require("../models/userInfo");
 
 // Add Random Code to DB
 router.post("/add", async (req, res, next) => {
@@ -19,38 +21,37 @@ router.post("/add", async (req, res, next) => {
   return res.json({ success: true, time: runTime });
 });
 
-// Add Random Code to DB
+// Register Code to DB
 router.post("/register", async (req, res, next) => {
   var start = new Date();
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
+  const joiResult = Joi.validate(req.body, UserInfoSchema);
+  if (joiResult.error) {
+    throw joiResult.error;
+  }
+
   const nationalCode = req.body.nationalCode;
-  const mobileNumber = req.body.mobileNumber;
-  const gender = req.body.gender;
-  const birthDate = req.body.birthDate;
-  const address = req.body.address;
   const codes = req.body.codes;
   if (!Util.checkNatiionalCode(nationalCode)) {
     throw new Error("Invalid national code");
   }
-  if (!Util.checkMobileNumber(mobileNumber)) {
-    throw new Error("Invalid mobile number");
-  }
-  var userInfo = {
-    firstName: firstName,
-    lastName: lastName,
-    nationalCode: nationalCode,
-    mobileNumber: mobileNumber,
-    gender: gender,
-    birthDate: birthDate,
-    address: address
-  };
+
   var result = [];
   for (let index = 0; index < codes.length; index++) {
-    result[index] = await Lottery.updateLotteryByCode(codes[index], userInfo);
+    result[index] = await Lottery.updateLotteryByCode(codes[index], req.body);
   }
   var runTime = (new Date() - start) / 1000 + "s";
   return res.json({ success: true, time: runTime, result: result });
+});
+
+// code counts
+router.post("/counts", [passport.authenticate("jwt", { session: false })], async (req, res, next) => {
+  var start = new Date();
+  from = req.body.from;
+  to = req.body.to;
+
+  count = await Lottery.getCount(from, to);
+  var runTime = (new Date() - start) / 1000 + "s";
+  return res.json({ success: true, time: runTime, count: count });
 });
 
 module.exports = router;

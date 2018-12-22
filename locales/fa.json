@@ -1,0 +1,16 @@
+{
+  "Invalid mobile number": "شماره تلفن همراه به درستی وارد نشده است",
+  "Invalid last name": "نام خانوادگی به درستی وارد نشده است",
+  "Invalid first name": "نام به درستی وارد نشده است",
+  "Invalid national code": "کد ملی به درستی وارد نشده است",
+  "Invalid birthdate": "تاریخ تولد به درستی وارد نشده است",
+  "Invalid gender": "جنسیت به درستی وارد نشده است",
+  "Invalid address": "آدرس وارد شده صحیح نیست",
+  "Invalid lottery code": "کد قرعه کشی وارد شده صحیح نیست",
+  "Server error occurred": "خطایی در سرور رخ داده است",
+  "Code registered successfuly": "کد قرعه کشی با موفقیت ثبت شد",
+  "Code registered before": "کد قرعه کشی قبلا ثبت شده است",
+  "Invalid email": "ایمیل وارد شده صحیح نیست",
+  "Invalid password": "رمزعبور انتخاب شده باید حداقل شامل ۶ حرف باشد",
+  "Your Account not enabled yet by admin, please contact to admin": "حساب کاربری شما هنوز توسط مدیر سیستم فعال نشده است، لطفا با مدیر سیستم تماس بگیرید"
+}

@@ -6,6 +6,7 @@ const config = require("config");
 var app = express();
 require("./startup/logging")();
 require("./startup/db");
+require("./startup/i18n");
 require("./startup/routs")(app);
 
 const port = config.get("port");
