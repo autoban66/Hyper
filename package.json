@@ -1,7 +1,7 @@
 {
   "name": "hyper",
   "version": "1.0.0",
-  "description": "Julia Backend",
+  "description": "Hyperstart Lottery",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -12,19 +12,16 @@
     "body-parser": "*",
     "config": "^2.0.1",
     "cors": "*",
-    "dateformat": "*",
-    "email-templates": "^5.0.0",
     "express": "*",
     "express-async-errors": "^3.0.0",
-    "fs": "0.0.2",
     "i18n": "^0.8.3",
     "jsonwebtoken": "*",
     "mongoose": "^5.2.14",
     "passport": "*",
     "passport-jwt": "*",
-    "pug": "^2.0.3",
     "rand-token": "*",
-    "winston": "^3.1.0"
+    "winston": "^3.1.0",
+    "joi": "^24.3.0"
   },
   "author": "Hojjat Jashnniloofar",
   "license": "ISC"

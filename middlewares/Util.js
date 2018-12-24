@@ -1,5 +1,3 @@
-var fs = require("fs");
-
 module.exports.checkNatiionalCode = function(nationalCode) {
   if (nationalCode.length != 10) {
     return false;
