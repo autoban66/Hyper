@@ -7,7 +7,7 @@ var app = express();
 require("./boot/logging")();
 require("./boot/db");
 require("./boot/i18n");
-require("./boot/routs")(app);
+require("./boot/routes")(app);
 
 const port = config.get("port");
 
