@@ -1,4 +1,6 @@
 const Account = require('../../models/account');
+const jwt = require('jsonwebtoken');
+const config = require('config');
 
 module.exports = async (req, res, next) => {
   const email = req.body.email;
