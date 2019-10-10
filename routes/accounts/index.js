@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const register = require('./register');
-const register = require('./login');
+const login = require('./login');
 
 router.post('/register', async (req, res, next) => {
   register(req, res, next);
