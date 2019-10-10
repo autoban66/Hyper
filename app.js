@@ -4,10 +4,10 @@ const errors = require("./middlewares/errors");
 const config = require("config");
 
 var app = express();
-require("./startup/logging")();
-require("./startup/db");
-require("./startup/i18n");
-require("./startup/routs")(app);
+require("./boot/logging")();
+require("./boot/db");
+require("./boot/i18n");
+require("./boot/routs")(app);
 
 const port = config.get("port");
 
