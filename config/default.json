@@ -1,5 +1,6 @@
 {
   "database": "mongodb://localhost:27017/hyper",
   "JWTsecret": "zF7VThsHuV4Akxwo1536756453106",
+  "JWTExpiresIn": 604800,
   "port": "3000"
 }
