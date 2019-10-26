@@ -37,7 +37,7 @@ module.exports.getAccountByIdAsync = async function(id) {
 };
 
 module.exports.getAccountByStrId = async function(strId) {
-  var id = mongoose.Types.ObjectId;
+  let id = mongoose.Types.ObjectId;
   if (id.isValid(strId)) {
     id = mongoose.Types.ObjectId(strId);
     account = await Account.findById(id);

@@ -16,7 +16,7 @@ const LotterySchema = mongoose.Schema({
 });
 
 // const Lottery
-var Lottery = [];
+let Lottery = [];
 for (let index = 48; index < 58; index++) {
   char = String.fromCharCode(index);
   Lottery[char] = mongoose.model("Lottery_" + char, LotterySchema);
@@ -50,7 +50,7 @@ module.exports.updateLotteryByCode = async function(code, userInfo) {
 };
 
 module.exports.addLottery = async function(code) {
-  var newLottery = new Lottery[code.charAt(0)]({
+  let newLottery = new Lottery[code.charAt(0)]({
     code: code
   });
 
@@ -58,7 +58,7 @@ module.exports.addLottery = async function(code) {
 };
 
 module.exports.getCount = async function(from, to) {
-  var query = {};
+  let query = {};
   query["registerDate"] = { $gte: "1900-01-01" };
   if (from) {
     query["registerDate"]["$gte"] = from;
@@ -66,15 +66,15 @@ module.exports.getCount = async function(from, to) {
   if (to) {
     query["registerDate"]["$lte"] = to;
   }
-  var sum = 0;
+  let sum = 0;
   for (let index = 48; index < 58; index++) {
     char = String.fromCharCode(index);
-    var count = await Lottery[char].find(query).countDocuments();
+    let count = await Lottery[char].find(query).countDocuments();
     sum = sum + count;
   }
   for (let index = 97; index < 123; index++) {
     char = String.fromCharCode(index);
-    var count = await Lottery[char].find(query).countDocuments();
+    let count = await Lottery[char].find(query).countDocuments();
     sum = sum + count;
   }
   return sum;

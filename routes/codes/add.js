@@ -14,7 +14,7 @@ module.exports = async (req, res, next) => {
       )
     );
   }
-  var runTime = (new Date() - start) / 1000 + "s";
+  let runTime = (new Date() - start) / 1000 + "s";
   res.json({ time: runTime });
   next();
 };

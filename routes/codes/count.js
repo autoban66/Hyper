@@ -1,4 +1,4 @@
-const Lottery = require('../../models/lottery');
+const Lottery = require("../../models/lottery");
 
 module.exports = async (req, res, next) => {
   let start = new Date();
@@ -6,7 +6,7 @@ module.exports = async (req, res, next) => {
   to = req.query.to;
 
   let count = await Lottery.getCount(from, to);
-  var runTime = (new Date() - start) / 1000 + 's';
+  let runTime = (new Date() - start) / 1000 + "s";
   res.json({ time: runTime, count });
   next();
 };
