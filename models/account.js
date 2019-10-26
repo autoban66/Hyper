@@ -49,7 +49,7 @@ module.exports.getAccountByStrId = async function(strId) {
 };
 
 module.exports.getAccountByEmail = async function(email) {
-  const query = { email: email };
+  const query = { email };
   account = await Account.findOne(query, { __v: 0 });
 
   if (!account) {
@@ -63,12 +63,12 @@ module.exports.addAccount = async function(newAccount) {
   if (joiResult.error) {
     throw joiResult.error;
   }
-  account = new Account({
+  let account = new Account({
     email: newAccount.email,
     password: newAccount.password
   });
-  salt = await bcrypt.genSalt(10);
-  hash = await bcrypt.hash(account.password, salt);
+  let salt = await bcrypt.genSalt(10);
+  let hash = await bcrypt.hash(account.password, salt);
   account.password = hash;
   try {
     return await account.save();
@@ -86,8 +86,8 @@ module.exports.comparePassword = async function(candidatePassword, hash) {
 };
 
 module.exports.changePassword = async function(account, newPassword) {
-  salt = await bcrypt.genSalt(10);
-  hash = await bcrypt.hash(newPassword, salt);
+  let salt = await bcrypt.genSalt(10);
+  let hash = await bcrypt.hash(newPassword, salt);
   account.password = hash;
   return await account.save();
 };
