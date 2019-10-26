@@ -3,7 +3,7 @@ const path = require("path");
 const errors = require("./middlewares/errors");
 const config = require("config");
 
-var app = express();
+let app = express();
 require("./boot/logging")();
 require("./boot/db");
 require("./boot/i18n");

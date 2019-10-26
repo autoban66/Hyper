@@ -6,15 +6,11 @@ const config = require("config");
 module.exports = async (req, res, next) => {
   let start = new Date();
   const count = req.body.count;
+  let winners = [];
   for (let index = 0; index < count; index++) {
-    await Lottery.addLottery(
-      randToken.generate(
-        config.get("lotteryCodeLength"),
-        "0123456789abcdefghijklmnopqrstuvwxyz"
-      )
-    );
+    winners.push(await Lottery.selectWinner());
   }
   let runTime = (new Date() - start) / 1000 + "s";
-  res.json({ time: runTime });
+  res.json({ winners, time: runTime });
   next();
 };
