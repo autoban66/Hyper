@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const randToken = require("rand-token");
 
 // Lottery Schema
 const LotterySchema = mongoose.Schema({
@@ -26,7 +27,7 @@ for (let index = 97; index < 123; index++) {
 }
 
 module.exports.updateLotteryByCode = async function(code, userInfo) {
-  const query = { code: code };
+  const query = { code };
   lottery = await Lottery[code.charAt(0)].findOne(query);
 
   if (!lottery) {
@@ -77,4 +78,15 @@ module.exports.getCount = async function(from, to) {
     sum = sum + count;
   }
   return sum;
+};
+
+module.exports.selectWinner = async function() {
+  let num = randToken.generate(1, "0123456789abcdefghijklmnopqrstuvwxyz");
+  let lotteryCode = await Lottery[num].aggregate([
+    { $match: { win: false, registerDate: { $exists: true } } },
+    { $sample: { size: 1 } }
+  ]);
+  lotteryCode.win = true;
+  lotteryCode.save();
+  return lotteryCode;
 };
