@@ -10,7 +10,8 @@ const LotterySchema = mongoose.Schema({
   gender: { type: String, enum: ["Male", "Female"] },
   birthDate: { type: Date },
   address: { type: String },
-  registerDate: { type: Date }
+  registerDate: { type: Date },
+  win: { type: Boolean, default: false }
 });
 
 // const Lottery
@@ -48,7 +49,7 @@ module.exports.updateLotteryByCode = async function(code, userInfo) {
 };
 
 module.exports.addLottery = async function(code) {
-  var newLottery = new Lottery[(code.charAt(0))]({
+  var newLottery = new Lottery[code.charAt(0)]({
     code: code
   });
 
