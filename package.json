@@ -18,7 +18,7 @@
     "i18n": "^0.8.3",
     "joi": "^14.3.1",
     "jsonwebtoken": "*",
-    "mongoose": "^5.2.14",
+    "mongoose": "^5.7.5",
     "passport": "*",
     "passport-jwt": "*",
     "rand-token": "*",
